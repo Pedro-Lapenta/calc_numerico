@@ -1,0 +1,15 @@
+﻿sistema satisfaz as condicoes para utilizacao do metodo
+
+--- Matriz L ---
+[[1.     0.     0.     0.    ]
+ [0.25   1.     0.     0.    ]
+ [0.5    0.6667 1.     0.    ]
+ [0.25   0.3333 1.5    1.    ]]
+
+--- Matriz U ---
+[[16.  4.  8.  4.]
+ [ 0.  9.  6.  3.]
+ [ 0.  0.  4.  6.]
+ [ 0.  0.  0.  1.]]
+
+Solucao Final (x): [1. 1. 1. 1.]
