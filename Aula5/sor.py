@@ -1,13 +1,13 @@
 import numpy as np
 
-def sor(A, b, omega=1.05, tol=1e-2, kmax=10):
+def sor(A, b, omega=1.05, tol=1e-5, kmax=30):
     n = len(b)
     A = A.astype(float)
     b = b.astype(float)
     x = np.zeros(n)
 
     if any(np.diag(A) == 0):
-        return None
+        return None, 0
 
     for k in range(kmax):
         x_new = np.copy(x)
@@ -21,18 +21,25 @@ def sor(A, b, omega=1.05, tol=1e-2, kmax=10):
         erro = np.linalg.norm(x_new - x) / np.linalg.norm(x_new)
 
         if erro < tol:
-            return x_new
+            return x_new, k + 1
 
         x = x_new
 
-    return x
+    return x, kmax
 
 A = np.array([
-    [5, 1, 1],
-    [3, 4, 1],
-    [3, 3, 6]
+    [15,  5, -5],
+    [ 4, 10,  1],
+    [ 2, -2,  8]
 ], dtype=float)
-b = np.array([5, 6, 0], dtype=float)
+b = np.array([30, 23, -10], dtype=float)
 
-x = sor(A, b, omega=1.05)
+print("SOR com omega = 1.0:")
+x, iteracoes = sor(A, b, omega=1.0)
 print(f"Resultado: {np.round(x, 4)}")
+print(f"Número de iterações: {iteracoes}")
+
+print("\nSOR com omega = 1.5:")
+x, iteracoes = sor(A, b, omega=1.5)
+print(f"Resultado: {np.round(x, 4)}")
+print(f"Número de iterações: {iteracoes}")

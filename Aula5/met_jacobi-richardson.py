@@ -1,13 +1,13 @@
 import numpy as np
 
-def jacobi_richardson(A, b, tol=1e-2, kmax=10):
+def jacobi_richardson(A, b, tol=1e-5, kmax=30):
     n = len(b)
     A = A.astype(float)
     b = b.astype(float)
     x = np.zeros(n)
     
     if any(np.diag(A) == 0):
-        return None
+        return None, 0
 
     for k in range(kmax):
         x_new = np.zeros(n)
@@ -19,18 +19,19 @@ def jacobi_richardson(A, b, tol=1e-2, kmax=10):
         erro = np.linalg.norm(x_new - x) / np.linalg.norm(x_new)
 
         if erro < tol:
-            return x_new
+            return x_new, k + 1
 
         x = x_new
 
-    return x
+    return x, kmax
 
 A = np.array([
-    [10, 2,  1],
-    [ 1, 5,  1],
-    [ 2, 3, 10]
+    [15,  5, -5],
+    [ 4, 10,  1],
+    [ 2, -2,  8]
 ], dtype=float)
-b = np.array([7, -8, 6], dtype=float)
+b = np.array([30, 23, -10], dtype=float)
 
-x = jacobi_richardson(A, b)
+x, iteracoes = jacobi_richardson(A, b)
 print(f"Resultado: {np.round(x, 4)}")
+print(f"Número de iterações: {iteracoes}")
